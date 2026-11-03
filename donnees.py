@@ -1,14 +1,14 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import GroupShuffleSplit
-from sklearn.model_selection import train_test_split, cross_val_score
+from sklearn.model_selection import train_test_split
 
 def charger_donnees(chemin: str) -> pd.DataFrame:
     """ Charger les données du projet
         chemin : chemin pour accéder au fichier
         Retourne la structure de données
     """
-    return pd.read_csv(chemin)
+    with open(chemin, "r", encoding="utf-8") as f:
+        return pd.read_csv(f)
 
 def garder_colonnes(df: pd.DataFrame, colonnes: list) -> pd.DataFrame:
     """ Retourne le tableau utile au projet
@@ -50,9 +50,9 @@ def construire_cible(df: pd.DataFrame) -> pd.DataFrame:
     return df[df["saison_suivante"] - df["seasonId"] == 10001].copy()
 
 
-def diviserdonnees(df: pd.DataFrame, caracteristique: list, test_size : float = 0.2, random_state : int = 42) :
+def separer_donnees(df: pd.DataFrame, caracteristique: list, size : float = 0.2, state : int = 42) :
     # Division des données
     x = df[caracteristique]
     y = df["points_suivante"]
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size, random_state)
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = size, random_state = state)
     return X_train, X_test, y_train, y_test
