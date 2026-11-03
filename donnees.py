@@ -50,9 +50,8 @@ def construire_cible(df: pd.DataFrame) -> pd.DataFrame:
     return df[df["saison_suivante"] - df["seasonId"] == 10001].copy()
 
 
-def separer_donnees(df: pd.DataFrame, caracteristique: list, size : float = 0.2, state : int = 42) :
+def separer_donnees(df: pd.DataFrame, caracteristique: list, size : float = 0.2, state : int = 42) -> list :
     # Division des données
     x = df[caracteristique]
     y = df["points_suivante"]
-    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size = size, random_state = state)
-    return X_train, X_test, y_train, y_test
+    return train_test_split(x, y, test_size = size, random_state = state)
