@@ -4,5 +4,5 @@ COLONNES_UTILE = ["playerId", "seasonId", "skaterFullName", "points",
                   "gamesPlayed", "goals", "assists", "shots", "penaltyMinutes", 
                   "plusMinus", "positionCode", "evPoints", "ppPoints", "teamAbbrevs"]
 
-CARACTERISTIQUE = ["points", "gamesPlayed", "goals", "assists", "shots", "penaltyMinutes", 
+CARACTERISTIQUES = ["points", "gamesPlayed", "goals", "assists", "shots", "penaltyMinutes", 
                    "plusMinus", "positionCode", "evPoints", "ppPoints"]
