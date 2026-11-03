@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import GroupShuffleSplit
+from sklearn.model_selection import train_test_split, cross_val_score
 
 def charger_donnees(chemin: str) -> pd.DataFrame:
     """ Charger les données du projet
@@ -34,3 +35,9 @@ def nettoyer(df: pd.DataFrame) -> pd.DataFrame:
     df = df.dropna(subset=["positionCode"])
     #df = df.dropna(subset=["timeOnIcePerGame"])
     return df
+
+def diviserdonnees(df: pd.DataFrame, caracteristique: list, test_size : float =0.2, random_state : int =42) :
+    # Division des données
+    x = df[caracteristique]
+    y = df["points_suivante"]
+    X_train, X_test, y_train, y_test = train_test_split(x, y, test_size, random_state)
