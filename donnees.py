@@ -34,3 +34,15 @@ def nettoyer(df: pd.DataFrame) -> pd.DataFrame:
     df = df.dropna(subset=["positionCode"])
     #df = df.dropna(subset=["timeOnIcePerGame"])
     return df
+
+def construire_cible(df: pd.DataFrame) -> pd.DataFrame:
+    """Ajoute points_suivante
+        Ne garde que les paires de saisons consécutives. Les lignes sans
+        saison suivante (dernière saison d'un joueur) sont retirées
+    """
+    df = df.sort_values(["playerId", "seasonId"]).copy()
+    groupes = df.groupby("playerId")
+    df["points_suivante"] = groupes["points"].shift(-1)
+    df["saison_suivante"] = groupes["seasonId"].shift(-1)
+    df = df.dropna(subset=["points_suivante"])
+    return df[df["saison_suivante"] - df["seasonId"] == 10001].copy()
