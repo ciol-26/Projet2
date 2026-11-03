@@ -32,4 +32,5 @@ def nettoyer(df: pd.DataFrame) -> pd.DataFrame:
     """
     df = df.drop_duplicates()
     df = df.dropna(subset=["positionCode"])
+    #df = df.dropna(subset=["timeOnIcePerGame"])
     return df
