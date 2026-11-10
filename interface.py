@@ -1,4 +1,5 @@
 import tkinter as tk 
+from tkinter import ttk-
 from PIL import Image, ImageTk
  
 #widget.config()
@@ -170,6 +171,11 @@ bouton_retour_reel = tk.Button(
 )
 bouton_retour_reel.place(x=20, y=20)
 
+menu = ttk.Combobox(
+    frame_reel,
+    values=["Canadiens de Montréal", "Mapple Leafs Toronto", "Bruins de Boston","Sabres de Buffalo","Red Wings de Detroit","Panthers de la Floride","Sénteurs d'Ottawa","Lightning de Tampa Bay","Blackhawls de Chicago","Avalanche du Colorado","Stars de Dallas", "Wild du Minnesota","Predaators de Nashville","Blues de St. Louis","Mammoth de l'Utah","Jets de Winnipeg","Hurricanes de la Caroline","Blue Jackets de Columbus","Devils du New Jersey","Islanders de New York","Rangers de New York","Flyers de Philadelphie","Penguins de Pittsburg","Capitals de Washington","Ducks d'Anaheim","Flames de Calgary","Oilers d'Edmontoon","Kings de Los Angeles","Sharks de San Jose","Kraken de Seattle","Canucks de Vancouver","Golden Knights de Vegas"]
+    state="readonly"
+)
 
 # PAGE JOUEUR FICTIF
 frame_fictif = tk.Frame(
