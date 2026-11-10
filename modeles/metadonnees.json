@@ -1,0 +1,72 @@
+{
+  "numeriques": [
+    "points",
+    "gamesPlayed",
+    "goals",
+    "assists",
+    "shots",
+    "penaltyMinutes",
+    "plusMinus",
+    "evPoints",
+    "ppPoints",
+    "timeOnIcePerGame"
+  ],
+  "categorielles": [
+    "positionCode"
+  ],
+  "intervalles": {
+    "points": [
+      0.0,
+      132.0
+    ],
+    "gamesPlayed": [
+      10.0,
+      85.0
+    ],
+    "goals": [
+      0.0,
+      69.0
+    ],
+    "assists": [
+      0.0,
+      100.0
+    ],
+    "shots": [
+      0.0,
+      528.0
+    ],
+    "penaltyMinutes": [
+      0.0,
+      372.0
+    ],
+    "plusMinus": [
+      -46.0,
+      64.0
+    ],
+    "evPoints": [
+      0.0,
+      90.0
+    ],
+    "ppPoints": [
+      0.0,
+      62.0
+    ],
+    "timeOnIcePerGame": [
+      128.4,
+      1764.8048
+    ]
+  },
+  "categories": {
+    "positionCode": [
+      "C",
+      "D",
+      "L",
+      "R"
+    ]
+  },
+  "metriques": {
+    "modele": 13.122052764878271,
+    "moyenne": 22.272207923189853,
+    "persistance": 14.681865342336842
+  }
+}

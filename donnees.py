@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from Graphiques.graphique import Graphique
+from graphique import Graphique
 
 class DonneesLNH:
     def __init__ (self, chemin: str = "", df: pd.DataFrame = None):
@@ -38,13 +38,10 @@ class DonneesLNH:
         """
         self.dataFrame = self.dataFrame.drop_duplicates()
         self.dataFrame = self.dataFrame.dropna(subset=["positionCode"])
-        #self.dataFrame = self.dataFrame.dropna(subset=["timeOnIcePerGame"])
+        self.dataFrame = self.dataFrame.dropna(subset=["timeOnIcePerGame"])
 
     def construire_cible(self) -> DonneesLNH:
         """Ajoute points_suivante (points du même joueur la saison suivante).
-
-        Ne garde que les paires de saisons consécutives. Les lignes sans
-        saison suivante (dernière saison d'un joueur) sont retirées.
         """
         df = self.dataFrame.sort_values(["playerId", "seasonId"]).copy()
         groupes = df.groupby("playerId")
