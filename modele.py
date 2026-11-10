@@ -27,7 +27,7 @@ def construire_metadonnees(X_train: pd.DataFrame, metriques: dict[str, float]) -
     }
 
 class ModeleLNH(ABC):
-    def __init__(self) -> None:
+    def __init__(self):
         self._estimateur = None
         self._colonnes = None
 
