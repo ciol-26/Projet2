@@ -1,6 +1,5 @@
 {
   "numeriques": [
-    "points",
     "gamesPlayed",
     "goals",
     "assists",
@@ -15,45 +14,41 @@
     "positionCode"
   ],
   "intervalles": {
-    "points": [
-      0.0,
-      132.0
-    ],
     "gamesPlayed": [
-      10.0,
-      85.0
+      1.0,
+      84.0
     ],
     "goals": [
       0.0,
-      69.0
+      100.0
     ],
     "assists": [
       0.0,
-      100.0
+      150.0
     ],
     "shots": [
       0.0,
-      528.0
+      1000.0
     ],
     "penaltyMinutes": [
       0.0,
-      372.0
+      500.0
     ],
     "plusMinus": [
-      -46.0,
-      64.0
+      -50.0,
+      70.0
     ],
     "evPoints": [
       0.0,
-      90.0
+      100.0
     ],
     "ppPoints": [
       0.0,
-      62.0
+      100.0
     ],
     "timeOnIcePerGame": [
-      128.4,
-      1764.8048
+      60.0,
+      1800.0
     ]
   },
   "categories": {

@@ -51,9 +51,9 @@ class ModeleLNH(ABC):
         """Prédit pour plusieurs lignes."""
         return self._estimateur.predict(self._preparer(X))
 
-    def predire(self, saisie: dict) -> float:
+    def predire(self, saisie: dict) -> int:
         """Prédit les points d'un joueur à partir de {colonne: valeur}."""
-        return max(0.0, float(self.predire_lot(pd.DataFrame([saisie]))[0]))
+        return max(0.0, int(self.predire_lot(pd.DataFrame([saisie]))[0]))
 
     def evaluer(self, X_test: pd.DataFrame, y_test: pd.Series) -> float:
         """Renvoie la RMSE du modèle sur l'ensemble de test."""
@@ -61,10 +61,9 @@ class ModeleLNH(ABC):
     
     def sauvegarder(self, dossier: str, metadonnees: dict) -> None:
         """Écrit modele.joblib et metadonnees.json"""
-        os.makedirs(dossier, exist_ok=True)
-        joblib.dump(self, os.path.join(dossier, "modele.joblib"))
-        with open(os.path.join(dossier, "metadonnees.json"), "w", encoding="utf-8") as f:
-            json.dump(metadonnees, f, indent=2, ensure_ascii = False)
+        joblib.dump(self, dossier)
+        #ith open(os.path.join(dossier, "metadonnees.json"), "w", encoding="utf-8") as f:
+        #    json.dump(metadonnees, f, indent=2, ensure_ascii = False)
 
     @staticmethod
     def charger(chemin: str) -> ModeleLNH:

@@ -57,6 +57,30 @@ class DonneesLNH:
         y = self.dataFrame["points_suivante"]
         return train_test_split(x, y, test_size = size, random_state = state)
 
+    def stats_joueur(self, nom: str, colonnes: list[str]) -> dict:
+        nom = nom.strip()
+        ligne = self.dataFrame[self.dataFrame["skaterFullName"].str.lower() == nom.lower()]
+        return ligne.iloc[0][colonnes].to_dict()
+
+    def equipes(self) -> list[str]:
+        """Renvoie les abréviations des équipes, sans doublon
+        """
+        equipes = self.dataFrame["teamAbbrevs"].dropna().str.split(",").explode()
+        return sorted(equipes.str.strip().unique())
+
+    def noms_joueurs(self, texte: str = "", equipe: str = "") -> list[str]:
+        """ Renvoie les noms des joueurs qui contiennent texte et, si equipe est donnée, qui jouaient pour cette équipe
+            à leur saison. Triés par nom de famille.
+        """
+        joueurs = self.dataFrame
+        if equipe:
+            dans_equipe = joueurs["teamAbbrevs"].fillna("").str.split(",").apply(lambda liste: equipe in liste)
+            joueurs = joueurs[dans_equipe]
+        texte = texte.strip()
+        if texte:
+            joueurs = joueurs[joueurs["skaterFullName"].str.contains(texte, case=False, regex=False)]
+        return sorted(joueurs["skaterFullName"].unique(), key=lambda nom: nom.split()[-1])
+
     def sauvegarder(self, chemin: str) -> None:
         """ Écrit les données dans un fichier CSV
             chemin : chemin du fichier à créer
@@ -84,12 +108,14 @@ class DonneesLNH:
         g.axes.tick_params(axis="x", rotation = 45)
         return g
 
-    def graphique_distribution(self, colonne: str, nb_classes: int = 20) -> Graphique:
+    def graphique_distribution(self, colonne: str, libelle: str = "", nb_classes: int = 20) -> Graphique:
         """ Crée l'histogramme d'une colonne
             colonne : statistique à afficher
+            libelle : nom affiché (par défaut, le nom de la colonne)
             nb_classes : nombre de classes
             Retourne le graphique
         """
-        g = Graphique(f"Distribution de {colonne}", colonne, "Nombre de joueurs")
+        nom = libelle or colonne
+        g = Graphique(f"Distribution : {nom.lower()}", nom, "Nombre de joueurs")
         g.tracer_histogramme(self.dataFrame[colonne], nb_classes)
         return g
