@@ -1,6 +1,6 @@
 # Prédiction des points d'un joueur de la LNH
 
-Projet 2 d'INF1007 (Polytechnique Montréal, A2026), réalisé par Loïc Rousseau et Jade .
+Projet 2 d'INF1007 (Polytechnique Montréal, A2026), réalisé par Loïc Rousseau et Jade Karaoulanis.
 
 ## Description
 
@@ -42,3 +42,10 @@ Résultat : **18 973 lignes** après nettoyage et construction de la cible.
 - **Numériques** : nombre de matchs joués : `gamesPlayed`, nombre de buts : `goals`, nombre de mentions d'aide : `assists`, nombre de tirs au but : `shots`, nombre de minutes de pénalité : `penaltyMinutes`, différentiel de la saison : `plusMinus`, temps moyen passé sur la glace par match (en secondes) : `timeOnIcePerGame`
 - **Catégorielle** : position du joueur : `positionCode`
 - **Cible** : `points_suivante` (régression)
+
+## Étape 2 (entrainement)
+
+Lors de l'entrainement, le modèle a obtenu une précision de 61% lorsqu'il a prédit les résultats avecune marge de +/- 8 points. On peut aussi le constater dans le graphique de corélation suivant (Graphiques/predit_reel.png). 
+La RMSE est d'environ 13, donc on a une marge d'erreur de +/- 13 en moyenne sur les points prédits. De plus, comme le hockey est un sport complexe et imprévisible, il est compliqué de prédire à la perfection les sattistiques d'un joueur, car il y a beaucoup d'imprévisibilité.
+
+## Étape 3 (interface)
