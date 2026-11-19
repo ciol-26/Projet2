@@ -16,6 +16,12 @@ with open(CHEMIN_META, "r", encoding="utf-8") as f:
   metadonnees = json.load(f)
 
 Application(ModeleLNH.charger(CHEMIN_JOBLIB), importer_variables(CHEMIN_META), metadonnees, DonneesLNH("Donnees/saisonDerniere.csv")).mainloop()
+# cible = DonneesLNH(os.path.join("Donnees", "donnees_modele.csv"))
+#X_train, X_test, y_train, y_test = cible.separer_donnees(CARACTERISTIQUES)
+# modele = ModeleLNH.charger(CHEMIN_JOBLIB)
+# print("\nRésultats sur l'ensemble de test :")
+# for seuil in (5, 10, 15, 20):
+#   print(f"  Prédictions à ± {seuil:>2} points : {modele.taux_reussite(X_test, y_test, seuil):5.1f} %")
 
 # donnees = DonneesLNH(os.path.join("Donnees", "statsPlayer.csv"))
 # donnees.nettoyer()

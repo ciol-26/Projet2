@@ -91,7 +91,7 @@ def importer_variables(chemin_json: str) -> list[Variable]:
     with open(chemin_json, "r", encoding="utf-8") as f:
         meta = json.load(f)
 
-    variables: list[Variable] = []
+    variables = []
     colonnes = meta["numeriques"] + meta["categorielles"]
     ordre = [c for c in LIBELLES if c in colonnes] + [c for c in colonnes if c not in LIBELLES]
     for col in ordre:

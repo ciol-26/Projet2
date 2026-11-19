@@ -52,7 +52,6 @@ class DonneesLNH:
         return DonneesLNH(df=df[consecutives])
 
     def separer_donnees(self, caracteristique: list, size : float = 0.2, state : int = 42) -> list :
-        # Division des données
         x = self.dataFrame[caracteristique]
         y = self.dataFrame["points_suivante"]
         return train_test_split(x, y, test_size = size, random_state = state)

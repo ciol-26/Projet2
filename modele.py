@@ -62,8 +62,8 @@ class ModeleLNH(ABC):
     def sauvegarder(self, dossier: str, metadonnees: dict) -> None:
         """Écrit modele.joblib et metadonnees.json"""
         joblib.dump(self, dossier)
-        #ith open(os.path.join(dossier, "metadonnees.json"), "w", encoding="utf-8") as f:
-        #    json.dump(metadonnees, f, indent=2, ensure_ascii = False)
+        with open(os.path.join(dossier, "metadonnees.json"), "w", encoding="utf-8") as f:
+            json.dump(metadonnees, f, indent=2, ensure_ascii = False)
 
     @staticmethod
     def charger(chemin: str) -> ModeleLNH:
@@ -71,6 +71,14 @@ class ModeleLNH(ABC):
         if not os.path.exists(chemin):
             raise FileNotFoundError(f"Fichier introuvable : {chemin}")
         return joblib.load(chemin)
+
+    def taux_reussite(self, X_test: pd.DataFrame, y_test: pd.Series, seuil: float) -> float:
+        """ Renvoie le pourcentage de prédictions à moins de seuil points de la vraie valeur
+            X_test, y_test : ensemble de test
+            seuil : écart maximal (en points) pour qu'une prédiction compte comme réussie
+        """
+        ecarts = np.abs(np.asarray(y_test, dtype=float) - self.predire_lot(X_test))
+        return float(np.mean(ecarts <= seuil) * 100)
 
 
 class ModeleLineaire(ModeleLNH):
