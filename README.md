@@ -50,6 +50,22 @@ La RMSE est d'environ 13, donc on a une marge d'erreur de +/- 13 en moyenne sur 
 
 ## Étape 3 (interface)
 
+### Technologie
+ 
+**Tkinter** (avec `ttk` pour le style), inclus avec Python et fonctionnant en local. Les graphiques Matplotlib sont intégrés dans la fenêtre avec `FigureCanvasTkAgg`. Le choix et la maquette papier ont été présentés à l'auxiliaire (validation D).
+ 
+### Les écrans
+ 
+Notre maquette comporte un menu et quatre écrans. Chaque écran est une classe enfant de `Ecran`.
+ 
+| Écran | Ce que fait l'utilisateur |
+|---|---|
+| **Menu** | Choisit l'une des fonctions de l'application. |
+| **Prédire à partir d'un joueur réel** | Filtre par équipe, tape quelques lettres du nom (liste filtrée en direct), choisit un joueur. La prédiction utilise sa dernière saison. |
+| **Prédire à partir de statistiques** | Remplit un champ par variable : un champ numérique pour une statistique, une liste déroulante pour la position. Les points et les points en avantage numérique sont calculés à partir des buts, des aides et des points à forces égales. |
+| **Graphiques** | Choisit une statistique (par exemple le temps de glace moyen) et voit son histogramme, avec un titre et des axes étiquetés. |
+| **Historique** | Consulte les prédictions faites, enregistrées dans un fichier CSV. |
+
 
 ---
  
