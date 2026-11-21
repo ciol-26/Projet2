@@ -1,1 +1,16 @@
-
+# Journal d'utilisation de l'IA
+ 
+Projet 2 d'INF1007 (A2026), Loïc Rousseau et Jade Karaoulanis.
+ 
+Outil utilisé : **Claude (Anthropic)**. Nous restons responsables de chaque ligne remise et pouvons l'expliquer. Voici les 5 utilisations les plus importantes.
+ 
+| # | Outil | Ce que nous avons demandé | Réponse reçue | Vérification faite | Décision |
+|---|---|---|---|---|---|
+| 1 | Claude | Comment créer une colonne avec les points du même joueur à la saison suivante ? | Regrouper par joueur avec `groupby("playerId")`, puis décaler les points d'une ligne avec `shift(-1)`. La dernière saison de chaque joueur reçoit `NaN`, à retirer avec `dropna`. | **Exécution :** nous avons affiché les saisons d'un même joueur. `shift(-1)` prend la ligne suivante, pas forcément la saison suivante : un joueur absent une saison (blessure, ligue mineure, lock-out de 2004-2005) se retrouvait associé à une saison deux ans plus tard. | **Modifié.** On décale aussi `seasonId` et on garde seulement les lignes où la différence vaut 10001 (20232024 → 20242025). Les données sont triées par joueur et par saison avant le décalage. |
+| 2 | Claude | Relire notre méthode `construire_cible()` de la classe `DonneesLNH`. | L'IA a relevé que la méthode modifiait directement `self.dataFrame` : après l'appel, les données d'origine étaient perdues. | **Relecture et exécution :** après un appel, l'objet d'origine était bien modifié. Les données brutes n'étaient plus disponibles pour une autre utilisation. | **Modifié.** `construire_cible()` renvoie maintenant un nouvel objet `DonneesLNH`, grâce au constructeur qui accepte un chemin ou un DataFrame. |
+| 3 | Claude | À partir de quelle saison garder les données ? | Garder les saisons où toutes nos caractéristiques existent, en particulier le temps de glace (`timeOnIcePerGame`), absent des saisons anciennes. | **Exécution :** nous avons compté les valeurs manquantes de `timeOnIcePerGame` par saison avec pandas. | **Modifié.** Nous filtrions à partir de 2005-2006 ; nous gardons maintenant les saisons depuis 1997-1998, la première où le temps de glace est disponible pour tous les joueurs. On a plus de données, sans valeur manquante. |
+| 4 | Claude | Une fonction NumPy pour calculer la RMSE sans boucle. | `np.sqrt(np.mean((y_reel - y_predit) ** 2))`, avec conversion en `float`. | **Test :** un test pytest compare notre `rmse()` à `sklearn.metrics.root_mean_squared_error` avec `pytest.approx`. Un second test vérifie un petit cas calculé à la main. | **Gardé.** Les deux tests passent. |
+| 5 | Claude | Générer l'écran de saisie Tkinter construit à partir des métadonnées. | Une classe d'écran qui crée un champ par variable et une méthode `lire()` qui valide chaque saisie. | **Exécution :** au lancement, un seul champ (« Différentiel ») apparaissait, puis un `KeyError` sur `timeOnIcePerGame`. Cause : un `append` mal indenté et des listes de colonnes différentes entre les modules. | **Modifié.** Indentation corrigée, `Options.py` devient la seule source des colonnes, et une colonne manquante lève maintenant `DonneeInvalideError` au lieu de planter. |
+ 
+**Rôle de l'IA en résumé :** elle nous a surtout servi à comprendre des outils non vus en cours (pandas, scikit-learn, Tkinter) et à réfléchir aux premières versions de code. Chaque proposition a été vérifiée par une exécution, un test ou la documentation. Quatre ont été modifiées après vérification, dont deux (le décalage `shift(-1)` et le choix des saisons) qui ont changé notre façon de préparer les données.
+ 
