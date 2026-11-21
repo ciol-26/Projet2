@@ -51,9 +51,9 @@ class ModeleLNH(ABC):
         """Prédit pour plusieurs lignes."""
         return self._estimateur.predict(self._preparer(X))
 
-    def predire(self, saisie: dict) -> float:
+    def predire(self, saisie: dict) -> int:
         """Prédit les points d'un joueur à partir de {colonne: valeur}."""
-        return max(0.0, float(self.predire_lot(pd.DataFrame([saisie]))[0]))
+        return max(0.0, int(self.predire_lot(pd.DataFrame([saisie]))[0]))
 
     def evaluer(self, X_test: pd.DataFrame, y_test: pd.Series) -> float:
         """Renvoie la RMSE du modèle sur l'ensemble de test."""
@@ -61,8 +61,7 @@ class ModeleLNH(ABC):
     
     def sauvegarder(self, dossier: str, metadonnees: dict) -> None:
         """Écrit modele.joblib et metadonnees.json"""
-        os.makedirs(dossier, exist_ok=True)
-        joblib.dump(self, os.path.join(dossier, "modele.joblib"))
+        joblib.dump(self, dossier)
         with open(os.path.join(dossier, "metadonnees.json"), "w", encoding="utf-8") as f:
             json.dump(metadonnees, f, indent=2, ensure_ascii = False)
 
@@ -72,6 +71,14 @@ class ModeleLNH(ABC):
         if not os.path.exists(chemin):
             raise FileNotFoundError(f"Fichier introuvable : {chemin}")
         return joblib.load(chemin)
+
+    def taux_reussite(self, X_test: pd.DataFrame, y_test: pd.Series, seuil: float) -> float:
+        """ Renvoie le pourcentage de prédictions à moins de seuil points de la vraie valeur
+            X_test, y_test : ensemble de test
+            seuil : écart maximal (en points) pour qu'une prédiction compte comme réussie
+        """
+        ecarts = np.abs(np.asarray(y_test, dtype=float) - self.predire_lot(X_test))
+        return float(np.mean(ecarts <= seuil) * 100)
 
 
 class ModeleLineaire(ModeleLNH):

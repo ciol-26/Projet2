@@ -4,6 +4,20 @@ from exception import DonneeInvalideError
 import os
 import json
 
+LIBELLES = {
+    "goals": "Buts",
+    "assists": "Aides",
+    "points": "Points",
+    "ppPoints": "Points en avantage numérique",
+    "penaltyMinutes": "Minutes de pénalités",
+    "positionCode": "Position",
+    "gamesPlayed": "Parties jouées",
+    "shots": "Tirs au but",
+    "evPoints": "Points à forces égales",
+    "timeOnIcePerGame": "Temps de glace moyen (s)",
+    "plusMinus": "Différentiel",
+}
+
 
 class Variable(ABC):
     def __init__(self, nom: str, libelle: str = "") -> None:
@@ -74,14 +88,17 @@ class VariableCategorielle(Variable):
 def importer_variables(chemin_json: str) -> list[Variable]:
     if not os.path.exists(chemin_json):
         raise FileNotFoundError(f"Fichier introuvable : {chemin_json}")
-    
     with open(chemin_json, "r", encoding="utf-8") as f:
         meta = json.load(f)
 
     variables = []
-    for col in meta["numeriques"]:
-        minimum, maximum = meta["intervalles"][col]
-        variables.append(VariableNumerique(col, minimum, maximum))
-    for col in meta["categorielles"]:
-        variables.append(VariableCategorielle(col, meta["categories"][col]))
+    colonnes = meta["numeriques"] + meta["categorielles"]
+    ordre = [c for c in LIBELLES if c in colonnes] + [c for c in colonnes if c not in LIBELLES]
+    for col in ordre:
+        libelle = LIBELLES.get(col, col)
+        if col in meta["categories"]:
+            variables.append(VariableCategorielle(col, meta["categories"][col], libelle))
+        else:
+            minimum, maximum = meta["intervalles"][col]
+            variables.append(VariableNumerique(col, minimum, maximum, libelle))
     return variables

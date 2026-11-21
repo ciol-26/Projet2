@@ -1,47 +1,49 @@
-"""Point d'entrée : entraîne le modèle, l'évalue, le sauvegarde et trace le graphique."""
+import json
 import os
 
 from donnees import DonneesLNH
-from graphique import Graphique
-from Options import SAISON_MIN, CARACTERISTIQUES
-from modele import ModeleLineaire, ModeleLNH, rmse, construire_metadonnees
+from interface import Application
+from modele import ModeleLNH
+from Options import SAISON_MIN, CARACTERISTIQUES, COLONNES_UTILE
+from variables import importer_variables
+from modele import ModeleLineaire, rmse
 
 DOSSIER_MODELE = "modeles"
-DOSSIER_GRAPHIQUES = "graphiques"
+CHEMIN_JOBLIB = os.path.join(DOSSIER_MODELE, "modele2.joblib")
+CHEMIN_META = os.path.join(DOSSIER_MODELE, "metadonnees.json")
+CHEMIN_BRUT = os.path.join("Donnees", "statsPlayer.csv")
+with open(CHEMIN_META, "r", encoding="utf-8") as f:
+  metadonnees = json.load(f)
 
-# 1. Préparer les données (à décommenter pour régénérer donnees_modele.csv)
+Application(ModeleLNH.charger(CHEMIN_JOBLIB), importer_variables(CHEMIN_META), metadonnees, DonneesLNH("Donnees/saisonDerniere.csv")).mainloop()
+# cible = DonneesLNH(os.path.join("Donnees", "donnees_modele.csv"))
+#X_train, X_test, y_train, y_test = cible.separer_donnees(CARACTERISTIQUES)
+# modele = ModeleLNH.charger(CHEMIN_JOBLIB)
+# print("\nRésultats sur l'ensemble de test :")
+# for seuil in (5, 10, 15, 20):
+#   print(f"  Prédictions à ± {seuil:>2} points : {modele.taux_reussite(X_test, y_test, seuil):5.1f} %")
+
 # donnees = DonneesLNH(os.path.join("Donnees", "statsPlayer.csv"))
 # donnees.nettoyer()
 # donnees.filtrer_saisons(SAISON_MIN)
 # donnees.filtrer_parties(10)
 # donnees = donnees.construire_cible()
+# donnees.garder_colonnes(COLONNES_UTILE)
 # donnees.sauvegarder(os.path.join("Donnees", "donnees_modele.csv"))
 
-cible = DonneesLNH(os.path.join("Donnees", "donnees_modele.csv"))
-X_train, X_test, y_train, y_test = cible.separer_donnees(CARACTERISTIQUES)
+# donnees = DonneesLNH("Donnees/statsPlayer.csv")
+# donnees.filtrer_saisons(20252026)
+# donnees.filtrer_parties(10)
+# donnees.garder_colonnes(["playerId", "seasonId", "skaterFullName", "gamesPlayed", "goals", "assists", "shots", "penaltyMinutes", "plusMinus", "positionCode", "evPoints", "ppPoints", "teamAbbrevs", "timeOnIcePerGame"])
+# donnees.nettoyer()
+# donnees.sauvegarder("Donnees/saisonDerniere.csv")
 
-# 2. Entraîner et évaluer
-#modele = ModeleLineaire()
-#modele.entrainer(X_train, y_train)
-#rmse_modele = modele.evaluer(X_test, y_test)
+# cible = DonneesLNH(os.path.join("Donnees", "donnees_modele.csv"))
+# X_train, X_test, y_train, y_test = cible.separer_donnees(CARACTERISTIQUES)
 
-# Références : la moyenne pour tout le monde, puis « même nombre de points »
-#rmse_moyenne = rmse(y_test, [y_train.mean()] * len(y_test))
-#rmse_persistance = rmse(y_test, X_test["points"])
 
-#print(f"RMSE du modèle     : {rmse_modele:.2f} points")
-#print(f"RMSE de la moyenne : {rmse_moyenne:.2f} points")
-#print(f"RMSE persistance   : {rmse_persistance:.2f} points")
+# modele = ModeleLineaire()
+# modele.entrainer(X_train, y_train)
+# rmse_modele = modele.evaluer(X_test, y_test)
 
-# 3. Sauvegarder le modèle et ses métadonnées
-#metriques = {"modele": rmse_modele,
- #            "moyenne": rmse_moyenne,
-  #           "persistance": rmse_persistance}
-#meta = construire_metadonnees(X_train, metriques)
-#modele.sauvegarder(DOSSIER_MODELE, meta)
-
-# Vérification : on recharge le modèle et on prédit un joueur du test
-modele_charge = ModeleLNH.charger(DOSSIER_MODELE + "/modele.joblib")
-
-# 4. Graphique prédit contre réel
-y_pred = modele_charge.predire_lot(X_test)
+# modele.sauvegarder(CHEMIN_JOBLIB, {})
