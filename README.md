@@ -48,6 +48,9 @@ Résultat : **18 973 lignes** après nettoyage et construction de la cible.
 Lors de l'entrainement, le modèle a obtenu une précision de 61% lorsqu'il a prédit les résultats avecune marge de +/- 8 points. On peut aussi le constater dans le graphique de corélation suivant (Graphiques/predit_reel.png). 
 La RMSE est d'environ 13, donc on a une marge d'erreur de +/- 13 en moyenne sur les points prédits. De plus, comme le hockey est un sport complexe et imprévisible, il est compliqué de prédire à la perfection les sattistiques d'un joueur, car il y a beaucoup d'imprévisibilité.
 
+Voici un graphique représentant le nuage de points des prédictions.
+![Points prédits contre points réels sur l'ensemble de test](Graphiques/predit_reel.png)
+
 ## Étape 3 (interface)
 
 ### Technologie
