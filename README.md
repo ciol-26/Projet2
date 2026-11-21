@@ -49,3 +49,17 @@ Lors de l'entrainement, le modèle a obtenu une précision de 61% lorsqu'il a pr
 La RMSE est d'environ 13, donc on a une marge d'erreur de +/- 13 en moyenne sur les points prédits. De plus, comme le hockey est un sport complexe et imprévisible, il est compliqué de prédire à la perfection les sattistiques d'un joueur, car il y a beaucoup d'imprévisibilité.
 
 ## Étape 3 (interface)
+
+
+---
+ 
+## Documentation consultée
+ 
+- pandas, *10 minutes to pandas* : https://pandas.pydata.org/docs/user_guide/10min.html
+- pandas, `DataFrame.groupby` : https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html
+- scikit-learn, `LinearRegression` : https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html
+- scikit-learn, `train_test_split` : https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html
+- Python, module `tkinter` : https://docs.python.org/3/library/tkinter.html
+- Matplotlib, intégration dans Tkinter : https://matplotlib.org/stable/gallery/user_interfaces/embedding_in_tk_sgskip.html
+- GitHub Actions, Python : https://docs.github.com/actions/automating-builds-and-tests/building-and-testing-python
+---
